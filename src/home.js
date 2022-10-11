@@ -13,7 +13,8 @@ const Home = ()=> {
     }
 
     const removeTodo = (id) => {
-        list.filter((item)=> item.id !== id);
+        let newList = list.filter((item)=> item.id !== id);
+        setList(newList);
     }
 
     return(
