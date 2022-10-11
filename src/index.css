@@ -3,7 +3,7 @@
   padding: 0;
   box-sizing: border-box;
 }
-:root {
+.dark {
   --top: linear-gradient hsl(192, 100%, 67%) to hsl(280, 87%, 65%);
   --todo: hsl(0, 0%, 100%);
   --bottom: hsl(235, 21%, 11%);
@@ -25,7 +25,6 @@
 body {
   font-family: 'Josefin Sans', sans-serif;
   font-size: 18px;
-  background-color: var(--bottom);
 }
 section {
   display: flex;
@@ -47,6 +46,9 @@ section {
   letter-spacing: 25px;
   font-size: 40px;
   color: var(--todo);
+}
+.text img {
+  cursor: pointer;
 }
 form {
   display: flex;
