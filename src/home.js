@@ -2,6 +2,7 @@ import react, { useState, useEffect } from "react";
 
 const Home = ()=> {
     const [name, setName] = useState("");
+    const [toggle, setToggle] = useState(true);
     const [list, setList] = useState([]);
 
 
@@ -21,20 +22,32 @@ const Home = ()=> {
 
     }
 
+    useEffect(()=>{
+        {toggle ? document.body.style.backgroundColor = "hsl(235, 21%, 11%)" : 
+            document.body.style.backgroundColor = "hsl(0, 0%, 98%)"
+        }
+    },[toggle])
+
     return(
-        <main className="top" style={{ 
-            backgroundImage: `url(${process.env.PUBLIC_URL + '/images/bg-desktop-dark.jpg'})`,
+        <main className={`${toggle ? "dark" : "light"}`} style={{ 
+            backgroundImage: `${toggle ? 
+                `url(${process.env.PUBLIC_URL + '/images/bg-desktop-dark.jpg'})` :
+                `url(${process.env.PUBLIC_URL + '/images/bg-desktop-light.jpg'})`
+            }`,
             backgroundPosition: "center",
             backgroundSize: "cover",
             backgroundRepeat: "no-repeat",
-            height: "50vh"
+            height: "50vh",
             }}>
             <section>
                 <article className="text">
                     <h1>TODO</h1> 
 
-                    <span>
-                        <img src="/images/icon-sun.svg" />
+                    <span onClick={()=>setToggle(!toggle)}>
+                        {toggle ? 
+                            <img  src="/images/icon-sun.svg" /> :
+                            <img src="/images/icon-moon.svg" />
+                        }
                     </span>
                 </article>
             
