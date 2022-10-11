@@ -4,9 +4,9 @@ const Home = ()=> {
     const [name, setName] = useState("");
     const [list, setList] = useState([]);
 
+
     const handleSubmit = (e)=> {
         e.preventDefault();
-        
         const newName = {id: new Date().getTime().toString(), title: name};
         setList([...list, newName]);
         setName("");
@@ -15,6 +15,10 @@ const Home = ()=> {
     const removeTodo = (id) => {
         let newList = list.filter((item)=> item.id !== id);
         setList(newList);
+    }
+
+    const clearCompleted = ()=> {
+
     }
 
     return(
@@ -58,11 +62,21 @@ const Home = ()=> {
                     })}
 
                     <div className="end">
-
+                        <p>{list.length} items left</p>
+                        <p className="all">All</p>
+                        <p>Active</p>
+                        <p>Completed</p>
+                        <p onClick={clearCompleted}>Clear Completed</p>
                     </div>
                 </article>
+
+                <div className="sm-screen" style={{ visibility: list.length===0 ? "hidden": "visible" }}>
+                    <p className="all">All</p>
+                    <p>Active</p>
+                    <p>Completed</p>
+                </div>
                     
-                <p>
+                <p className="para">
                     Drag and drop to reorder list
                 </p>
 
