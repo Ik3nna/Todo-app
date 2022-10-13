@@ -1,10 +1,11 @@
-import react, { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 
 const Home = ()=> {
     const [name, setName] = useState("");
     const [toggle, setToggle] = useState(true);
     const [list, setList] = useState([]);
 
+    let completeList = [];
 
     const handleSubmit = (e)=> {
         e.preventDefault();
@@ -14,19 +15,60 @@ const Home = ()=> {
     }
 
     const removeTodo = (id) => {
-        let newList = list.filter((item)=> item.id !== id);
+        const newList = list.filter((item)=> item.id !== id);
         setList(newList);
     }
 
-    const clearCompleted = ()=> {
+    const complete = (e)=> {
+        const select = e.currentTarget.parentElement;
+        select.classList.add("active");
 
+        const newList = {id: new Date().getTime().toString(), title: e.currentTarget.parentElement.textContent};
+        
+        completeList.push(newList);
     }
+
+    const displayCompleted = ()=> {
+        if (completeList.length > 0) {
+            
+        }
+    }
+
+    const displayActive = ()=> {
+        if (completeList.length > 0) {
+            
+        } 
+    }
+
+    const clearCompleted = ()=> {
+        if (completeList.length > 0) {
+           
+        }
+    }
+
+    useEffect(()=>{
+        const selectors = document.querySelectorAll("#selectors");
+
+        selectors.forEach((selector)=>{
+            selector.addEventListener("click", (e)=>{
+                let currentItem = e.currentTarget;
+
+                selectors.forEach((item)=>{
+                    if (currentItem === item) {
+                        item.classList.add("color");
+                    } else {
+                        item.classList.remove("color");
+                    }
+                })
+            });
+        });
+    },[list]);
 
     useEffect(()=>{
         {toggle ? document.body.style.backgroundColor = "hsl(235, 21%, 11%)" : 
             document.body.style.backgroundColor = "hsl(0, 0%, 98%)"
         }
-    },[toggle])
+    },[toggle]);
 
     return(
         <main className={`${toggle ? "dark" : "light"}`} style={{ 
@@ -65,28 +107,29 @@ const Home = ()=> {
                     {list.map((item)=>{
                         const { id, title } = item;
                         return(
-                            <>
-                                <div key={id} className="list">
-                                    <div className="circle"></div> {title} 
+                            <React.Fragment key={id}>
+                                <div className="list">
+                                    <input type="radio" onClick={complete} /> {title} 
+
                                     <img src="/images/icon-cross.svg" onClick={()=>removeTodo(id)} />
                                 </div><hr />
-                            </>
+                            </React.Fragment>
                         );
                     })}
 
                     <div className="end">
                         <p>{list.length} items left</p>
-                        <p className="all">All</p>
-                        <p>Active</p>
-                        <p>Completed</p>
-                        <p onClick={clearCompleted}>Clear Completed</p>
+                        <p className="color all" id="selectors">All</p>
+                        <p onClick={displayActive} id="selectors">Active</p>
+                        <p onClick={displayCompleted} id="selectors">Completed</p>
+                        <p onClick={clearCompleted} id="selectors">Clear Completed</p>
                     </div>
                 </article>
 
-                <div className="sm-screen" style={{ visibility: list.length===0 ? "hidden": "visible" }}>
-                    <p className="all">All</p>
-                    <p>Active</p>
-                    <p>Completed</p>
+                <div className="sm-screen" style={{ display: list.length===0 ? "none": "flex" }}>
+                    <p className="all" id="selectors">All</p>
+                    <p onClick={displayActive} id="selectors">Active</p>
+                    <p onClick={displayCompleted} id="selectors">Completed</p>
                 </div>
                     
                 <p className="para">
