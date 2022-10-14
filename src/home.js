@@ -6,6 +6,7 @@ const Home = ()=> {
     const [list, setList] = useState([]);
 
     let completeList = [];
+    let activeList = list;
 
     const handleSubmit = (e)=> {
         e.preventDefault();
@@ -30,19 +31,20 @@ const Home = ()=> {
 
     const displayCompleted = ()=> {
         if (completeList.length > 0) {
-            
+            setList(completeList);
         }
     }
 
     const displayActive = ()=> {
         if (completeList.length > 0) {
             
+           
         } 
     }
 
     const clearCompleted = ()=> {
         if (completeList.length > 0) {
-           
+           setList(activeList);
         }
     }
 
