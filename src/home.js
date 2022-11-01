@@ -1,16 +1,33 @@
 import React, { useState, useEffect } from "react";
 
+// const getLocalStorage = ()=> {
+//     let list = localStorage.getItem("list");
+  
+//     if(list) {
+//       return JSON.parse(list);
+//     }
+//     else {
+//       return []
+//     }
+// }
+
 const Home = ()=> {
     const [name, setName] = useState("");
     const [toggle, setToggle] = useState(true);
 
     const [list, setList] = useState([]);
-
+    const [completeList, setCompleteList] = useState([]);
+    
     const handleSubmit = (e)=> {
         e.preventDefault();
         const newName = {id: new Date().getTime().toString(), title: name, completed: false};
-        setList([...list, newName]);
-        setName("");
+        
+        if (newName.title == "") {
+            setList([]);
+        } else {
+            setList([...list, newName]);
+            setName("");
+        }
     }
 
     const removeTodo = (id) => {
@@ -28,20 +45,40 @@ const Home = ()=> {
                 return x;
             }
         });
+
+        setCompleteList(list.filter((item)=>
+            item.completed == true
+        ));
+    }
+
+    const showAll = ()=> {
+        setList(list);
     }
 
     const showActive = ()=> {
         let filteredList = list.filter((item)=>
             item.completed == false
         );
+       
         setList(filteredList);
     }
 
     const showCompleted = ()=> {
+        let filteredList = list.filter((item)=>
+            item.completed == true
+        );
 
+        if (filteredList.length == 0) {
+            setList([])
+        } else {
+        setList(filteredList);
+        }
     }
 
+
     useEffect(()=>{
+        localStorage.setItem("list",JSON.stringify(list));
+
         const selectors = document.querySelectorAll("#selectors");
 
         selectors.forEach((selector)=>{
@@ -113,18 +150,18 @@ const Home = ()=> {
                     })}
 
                     <div className="end">
-                        <p>{list.length} items left</p>
-                        <p className="color all" id="selectors">All</p>
+                        <p>{completeList.length == 0 ? list.length : (list.length - completeList.length)} items left</p>
+                        <p onClick={showAll} className="color all" id="selectors">All</p>
                         <p onClick={showActive} id="selectors">Active</p>
                         <p onClick={showCompleted} id="selectors">Completed</p>
-                        <p  id="selectors">Clear Completed</p>
+                        <p onClick={showActive} id="selectors">Clear Completed</p>
                     </div>
                 </article>
 
                 <div className="sm-screen" style={{ display: list.length===0 ? "none": "flex" }}>
-                    <p className="color all" id="selectors">All</p>
-                    <p id="selectors">Active</p>
-                    <p id="selectors">Completed</p>
+                    <p onClick={showAll} className="color all" id="selectors">All</p>
+                    <p onClick={showActive} id="selectors">Active</p>
+                    <p onClick={showCompleted} id="selectors">Completed</p>
                 </div>
                     
                 <p className="para">
