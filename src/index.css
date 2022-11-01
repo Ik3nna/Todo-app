@@ -89,12 +89,13 @@ form input {
   position: relative;
   cursor: pointer;
 }
-input[type=radio] {
-  width: 25px;
-  height: 25px;
+input[type=checkbox] {
+  width: 30px;
+  height: 30px;
+  clip-path: circle(40%);
   cursor: pointer;
   position: relative;
-  left: 7px;
+  left: 0.4vw;
   color: var(--todoCard);
   border-color: var(--text);
   margin-right: 30px;
@@ -150,11 +151,22 @@ hr {
   margin-top: 30px;
 }
 .sm-screen {
-  display: none !important;
   cursor: pointer;
+}
+.sm-screen .color {
+  color: var(--all);
+}
+.sm-screen .color:hover {
+  color: var(--all) !important;
 }
 
 
+
+@media (min-width: 1200px) {
+  .sm-screen {
+    display: none !important;
+  }
+}
 @media (min-width: 992px) and (max-width: 1199px) {
   .text h1 {
     font-size: 30px;
@@ -168,10 +180,13 @@ hr {
     height: 23px;
     left: 40px;
   }
-  input[type=radio] {
-    width: 23px;
-    height: 23px;
-    left: -2px;
+  input[type=checkbox] {
+    width: 28px;
+    height: 28px;
+    left: -0.3vw;
+  }
+  .sm-screen {
+    display: none !important;
   }
 }
 
@@ -191,10 +206,10 @@ hr {
     height: 20px;
     left: 40px;
   }
-  input[type=radio] {
-    width: 20px;
-    height: 20px;
-    left: 2px;
+  input[type=checkbox] {
+    width: 26px;
+    height: 26px;
+    left: 0px;
     margin-right: 20px;
   }
   form input {
@@ -207,6 +222,9 @@ hr {
   }
   .para, .end {
     font-size: 16px;
+  }
+  .sm-screen {
+    display: none !important;
   }
 }
 
@@ -226,10 +244,10 @@ hr {
     height: 18px;
     left: 40px;
   }
-  input[type=radio] {
-    width: 18px;
-    height: 18px;
-    left: 7px;
+  input[type=checkbox] {
+    width: 24px;
+    height: 24px;
+    left: 0.5vw;
     margin-right: 25px;
   }
   form input {
@@ -242,6 +260,9 @@ hr {
   }
   .para, .end {
     font-size: 16px;
+  }
+  .sm-screen {
+    display: none !important;
   }
 }
 
@@ -264,10 +285,10 @@ hr {
     height: 16px;
     left: 30px
   }
-  input[type=radio] {
-    width: 16px;
-    height: 16px;
-    left: -3px;
+  input[type=checkbox] {
+    width: 22px;
+    height: 22px;
+    left: -1.4vw;
     margin-right: 10px;
   }
   form {
@@ -300,16 +321,9 @@ hr {
     padding: 10px 30px;
     border-radius: 5px;
     position: relative;
-    display: flex !important;
     align-items: center;
     justify-content: space-between;
     color: var(--text);
-  }
-  .sm-screen p:hover {
-    color: var(--hover);
-  }
-  .sm-screen .all {
-    color: var(--all);
   }
   
 }
