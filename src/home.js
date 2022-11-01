@@ -193,10 +193,6 @@ const Home = ()=> {
                     <p onClick={showCompleted} id="selectors">Completed</p>
                 </div>
                     
-                <p className="para">
-                    Drag and drop to reorder list
-                </p>
-
             </section>
         </main>
     );
