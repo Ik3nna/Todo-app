@@ -3,14 +3,12 @@ import React, { useState, useEffect } from "react";
 const Home = ()=> {
     const [name, setName] = useState("");
     const [toggle, setToggle] = useState(true);
-    const [list, setList] = useState([]);
 
-    let completeList = [];
-    let activeList = list;
+    const [list, setList] = useState([]);
 
     const handleSubmit = (e)=> {
         e.preventDefault();
-        const newName = {id: new Date().getTime().toString(), title: name};
+        const newName = {id: new Date().getTime().toString(), title: name, completed: false};
         setList([...list, newName]);
         setName("");
     }
@@ -20,32 +18,27 @@ const Home = ()=> {
         setList(newList);
     }
 
-    const complete = (e)=> {
+    const handleComplete = (e)=> {
         const select = e.currentTarget.parentElement;
         select.classList.add("active");
-
-        const newList = {id: new Date().getTime().toString(), title: e.currentTarget.parentElement.textContent};
         
-        completeList.push(newList);
+        list.map((item)=>{
+            if (item.title == select.textContent) {
+                let x = {...item, completed: item.completed = true}
+                return x;
+            }
+        });
     }
 
-    const displayCompleted = ()=> {
-        if (completeList.length > 0) {
-            setList(completeList);
-        }
+    const showActive = ()=> {
+        let filteredList = list.filter((item)=>
+            item.completed == false
+        );
+        setList(filteredList);
     }
 
-    const displayActive = ()=> {
-        if (completeList.length > 0) {
-            
-           
-        } 
-    }
+    const showCompleted = ()=> {
 
-    const clearCompleted = ()=> {
-        if (completeList.length > 0) {
-           setList(activeList);
-        }
     }
 
     useEffect(()=>{
@@ -111,7 +104,7 @@ const Home = ()=> {
                         return(
                             <React.Fragment key={id}>
                                 <div className="list">
-                                    <input type="radio" onClick={complete} /> {title} 
+                                    <input type="radio" onClick={handleComplete} />{title} 
 
                                     <img src="/images/icon-cross.svg" onClick={()=>removeTodo(id)} />
                                 </div><hr />
@@ -122,16 +115,16 @@ const Home = ()=> {
                     <div className="end">
                         <p>{list.length} items left</p>
                         <p className="color all" id="selectors">All</p>
-                        <p onClick={displayActive} id="selectors">Active</p>
-                        <p onClick={displayCompleted} id="selectors">Completed</p>
-                        <p onClick={clearCompleted} id="selectors">Clear Completed</p>
+                        <p onClick={showActive} id="selectors">Active</p>
+                        <p onClick={showCompleted} id="selectors">Completed</p>
+                        <p  id="selectors">Clear Completed</p>
                     </div>
                 </article>
 
                 <div className="sm-screen" style={{ display: list.length===0 ? "none": "flex" }}>
-                    <p className="all" id="selectors">All</p>
-                    <p onClick={displayActive} id="selectors">Active</p>
-                    <p onClick={displayCompleted} id="selectors">Completed</p>
+                    <p className="color all" id="selectors">All</p>
+                    <p id="selectors">Active</p>
+                    <p id="selectors">Completed</p>
                 </div>
                     
                 <p className="para">
